@@ -17,4 +17,4 @@ EXPOSE 80
 ENV NAME World
 
 # Run app.py when the container launches
-CMD ["python", "sklearn_image.py"]
+CMD ["python", "xgboost.py"]
