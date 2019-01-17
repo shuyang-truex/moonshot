@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: moonshotpod
+spec:
+  containers:
+  - name: moonshotpod
+    image: shuyang/moonshot:0.0.1
+    command: [ "python", "sklearn_image.py" ]
