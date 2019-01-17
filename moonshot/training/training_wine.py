@@ -45,14 +45,14 @@ if __name__ == "__main__":
 
     client = MlflowClient(tracking_uri="databricks")
     experiments = client.list_experiments()  # returns a list of mlflow.entities.Experiment
-    moonshot_exp = [x for x in experiments if x.name == 'Moonshot'][0]
+    moonshot_exp = [x for x in experiments if x.name == 'Moonshot S3'][0]
 
     mlflow.set_tracking_uri("databricks")
     with mlflow.start_run(experiment_id=moonshot_exp.experiment_id):
         lr = ElasticNet(alpha=alpha, l1_ratio=l1_ratio, random_state=42)
         lr.fit(train_x, train_y)
 
-        predicted_qualities = lr.predict(test_x)
+        predicted_qualities = lr.predict(X=test_x)
 
         (rmse, mae, r2) = eval_metrics(test_y, predicted_qualities)
 
@@ -67,4 +67,5 @@ if __name__ == "__main__":
         mlflow.log_metric("r2", r2)
         mlflow.log_metric("mae", mae)
         mlflow.sklearn.log_model(lr, "model")
+        mlflow.log_artifacts("model")
         mlflow.end_run()
