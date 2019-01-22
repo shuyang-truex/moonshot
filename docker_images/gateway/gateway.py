@@ -11,10 +11,13 @@ app = Flask(__name__)
 @app.route("/")
 def hello():
     model_id = request.args.get('model_id', default=1)
-    url = "http://scoring-service-{}:8080".format(model_id)
+    campaign_id = request.args.get('campaign_id', default=1)
+    url = "http://scoring-service-{}-{}:8080".format(model_id, campaign_id)
     logging.info(url)
-    content = urllib2.urlopen(url).read()
-    print content
+    try:
+        content = urllib2.urlopen(url).read()
+    except urllib2.URLError, e:
+        content = "model does not exist"
 
     html = "<h3>Hello {name}!</h3>" \
            "<b>Hostname:</b> {hostname}<br/>" \

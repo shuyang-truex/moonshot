@@ -39,5 +39,7 @@ spec:
         env:
         - name: MODEL_ID
           value: "model_id is 1"
+        - name: MODEL_PATH
+          value: "s3://datascience.truex.com/models/1"
         ports:
         - containerPort: 80
