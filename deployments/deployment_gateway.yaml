@@ -1,0 +1,38 @@
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: gateway-service
+spec:
+  selector:
+    app: gateway
+  ports:
+  - protocol: "TCP"
+    # Port accessible inside cluster
+    port: 8080
+    # Port to forward to inside the pod
+    targetPort: 80
+    # Port accessible outside cluster
+    nodePort: 30003
+  type: LoadBalancer
+
+
+
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: gateway-deployment
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: gateway
+    spec:
+      containers:
+      - name: gateway
+        image: shengshuyang/gateway:0.0.4
+        command: [ "python", "gateway.py" ]
+        ports:
+        - containerPort: 80

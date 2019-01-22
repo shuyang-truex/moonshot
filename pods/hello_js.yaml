@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: hello-js-pod
+  labels:
+    app: xgboost
+spec:
+  containers:
+  - name: hello-js
+    image: shengshuyang/hello-js:0.0.1
+    command: [ "node", "server.js" ]

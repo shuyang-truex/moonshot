@@ -1,0 +1,16 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: scoring-service
+spec:
+  selector:
+    app: xgboost
+  ports:
+  - protocol: "TCP"
+    # Port accessible inside cluster
+    port: 8080
+    # Port to forward to inside the pod
+    targetPort: 80
+    # Port accessible outside cluster
+    nodePort: 30002
+  type: LoadBalancer
