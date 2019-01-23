@@ -48,7 +48,8 @@ def create_deployment_object(image, model_id, campaign_id, model_path):
         image=image,
         ports=[client.V1ContainerPort(container_port=80)],
         command=["python", "xgboost.py"],
-        env=[client.V1EnvVar(name="MODEL_ID", value=model_id),
+        env=[client.V1EnvVar(name="NAME", value=deployment_name),
+             client.V1EnvVar(name="MODEL_ID", value=model_id),
              client.V1EnvVar(name="CAMPAIGN_ID", value=campaign_id),
              client.V1EnvVar(name="MODEL_PATH", value=model_path)]
         )
@@ -60,7 +61,7 @@ def create_deployment_object(image, model_id, campaign_id, model_path):
 
     # Create the specification of deployment
     spec = client.ExtensionsV1beta1DeploymentSpec(
-        replicas=10,
+        replicas=2,
         template=template,
         revision_history_limit=0)
 
@@ -120,6 +121,7 @@ def main():
     v1core = client.CoreV1Api()
 
     model_id, campaign_id, image = "1", "377", "shengshuyang/xgboost-scorer:0.0.4"
+    # model_id, campaign_id, image = "2", "368", "shengshuyang/xgboost-scorer:0.0.4"
 
     deployment = create_deployment_object(
         image=image,

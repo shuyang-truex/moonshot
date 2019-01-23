@@ -26,7 +26,8 @@ def create_deployment_object(image):
         name="gateway",
         image=image,
         ports=[client.V1ContainerPort(container_port=80)],
-        command=["python", "gateway.py"]
+        command=["python", "gateway.py"],
+        env=[client.V1EnvVar(name="NAME", value="gateway")]
     )
 
     # Create and configurate a spec section
