@@ -14,20 +14,29 @@ Notes:
    see `mlflow` gets integrated with our kubernetes cluster in the future.
 
 ```
+// get started
 brew install kubernetes-cli
 brew cask install minikube
 minikube start
 minikube dashboard
 minikube ip
 
+# compile and push docker images
 docker build -t shengshuyang/gateway:0.0.6 ./docker_images/gateway
 docker push shengshuyang/gateway:0.0.6
 docker build -t shengshuyang/xgboost-scorer:0.0.2 ./docker_images/xgboost
 docker push shengshuyang/xgboost-scorer:0.0.2
 
+# install python client https://github.com/kubernetes-client/python
+pip install kubernetes
+
+# add stuff to the kubernetes cluster
 python moonshot/serving/deploy_model.py
 python moonshot/serving/deploy_gateway.py
+
+# cleanup
 kubectl delete deployments --all
 kubectl delete svc --all
 kubectl delete pods --all
+minikube stop
 ```
