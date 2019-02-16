@@ -39,4 +39,9 @@ kubectl delete deployments --all
 kubectl delete svc --all
 kubectl delete pods --all
 minikube stop
+
+# commands for EKS (if so set up)
+https://docs.aws.amazon.com/eks/latest/userguide/dashboard-tutorial.html
+kubectl get services -o wide
+http://afe11d559323311e9b0cb0ab75194da5-1194683322.us-east-1.elb.amazonaws.com:8080/?model_id=1&campaign_id=377
 ```

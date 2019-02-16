@@ -30,7 +30,7 @@ def create_service_object(model_id, campaign_id):
         spec=client.V1ServiceSpec(
             selector={"app": "xgboost", "model_id": model_id, "campaign_id": campaign_id},
             ports=[client.V1ServicePort(protocol='TCP', port=8080, target_port=80)],
-            type="LoadBalancer"
+            type="ClusterIP"
         )
     )
     return svc
