@@ -86,9 +86,9 @@ def main():
     deployment = create_deployment_object(image="shengshuyang/gateway:0.0.6")
     service = create_service_object()
 
-    # create_deployment(extensions_v1beta1, deployment)
-    # create_service(v1core, service)
-    update_deployment(extensions_v1beta1, deployment)
+    create_deployment(extensions_v1beta1, deployment)
+    create_service(v1core, service)
+    # update_deployment(extensions_v1beta1, deployment)
 
 
 if __name__ == '__main__':

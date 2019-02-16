@@ -12,9 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from os import path
-
-import yaml
+import sys
 
 from kubernetes import client, config
 
@@ -112,7 +110,7 @@ def delete_deployment(api_instance):
     print("Deployment deleted. status='%s'" % str(api_response.status))
 
 
-def main():
+def main(model_id, campaign_id):
     # Configs can be set in Configuration class directly or using helper
     # utility. If no argument provided, the config will be loaded from
     # default location.
@@ -120,8 +118,7 @@ def main():
     extensions_v1beta1 = client.ExtensionsV1beta1Api()
     v1core = client.CoreV1Api()
 
-    model_id, campaign_id, image = "1", "377", "shengshuyang/xgboost-scorer:0.0.4"
-    # model_id, campaign_id, image = "2", "368", "shengshuyang/xgboost-scorer:0.0.4"
+    image = "shengshuyang/xgboost-scorer:0.0.4"
 
     deployment = create_deployment_object(
         image=image,
@@ -131,13 +128,14 @@ def main():
     )
     service = create_service_object(model_id, campaign_id)
 
-    # create_deployment(extensions_v1beta1, deployment)
-    # create_service(v1core, service)
+    create_deployment(extensions_v1beta1, deployment)
+    create_service(v1core, service)
 
-    update_deployment(extensions_v1beta1, deployment, model_id, campaign_id)
-
+    # update_deployment(extensions_v1beta1, deployment, model_id, campaign_id)
     # delete_deployment(extensions_v1beta1)
 
 
 if __name__ == '__main__':
-    main()
+    assert(len(sys.argv) == 3)
+    model_id, campaign_id = sys.argv[1], sys.argv[2]
+    main(model_id, campaign_id)
